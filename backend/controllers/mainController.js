@@ -17,9 +17,12 @@ export const postSignUpPage = async (req, res, next) => {
   }
 };
 export const getLoginPage = (req, res) => {
-  res.render('loginPage');
+  const errors = req.session.messages || [];
+  req.session.messages = [];
+  res.render('loginPage', { errors });
 };
 export const postLoginPage = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
+  failureMessage: true,
 });
