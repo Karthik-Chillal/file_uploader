@@ -9,5 +9,9 @@
     <h1>File Uploader</h1>
     <h2>Welcome back, <%= currentUser.username %>!</h2>
     <a href="/logout">Logout</a>
+    <form action="/home" method="post" enctype="multipart/form-data">
+      <input type="file" name="uploaded_file" />
+      <input type="submit" value="get me the result" />
+    </form>
   </body>
 </html>

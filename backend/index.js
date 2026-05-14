@@ -82,5 +82,5 @@ app.set('view engine', 'ejs');
 app.use('/', indexRouter);
 
 app.listen(port, () => {
-  console.log('server listening on https://localhost:3000');
+  console.log('server listening on http://localhost:3000');
 });

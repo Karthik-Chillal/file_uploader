@@ -11,7 +11,7 @@ export const postSignUpPage = async (req, res, next) => {
       'INSERT INTO users(username, email, password_hash) VALUES ($1, $2, $3)',
       [req.body.username, req.body.email, hashedPassword]
     );
-    res.redirect('/');
+    res.redirect('/home');
   } catch (err) {
     return next(err);
   }
@@ -22,7 +22,7 @@ export const getLoginPage = (req, res) => {
   res.render('loginPage', { errors });
 };
 export const postLoginPage = passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/home',
   failureRedirect: '/login',
   failureMessage: true,
 });
