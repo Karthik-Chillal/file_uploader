@@ -1,0 +1,12 @@
+<ul>
+    <div>Folders</div>
+  <% folders.forEach(folder => { %>
+    <li>
+      <!-- Displays the folder name -->
+      <span class="folder-icon">📁</span> 
+      <strong><%= folder.folder_name %></strong>
+
+      <a href="/folders/<%= folder.id %>">Open</a>
+    </li>
+  <% }); %>
+</ul>

@@ -11,6 +11,7 @@
     <a href="/logout">Logout</a>
     <br />
     <%- include('./partials/fileForm.ejs') %> <%-
-    include('./partials/folderForm.ejs') %>
+    include('./partials/folderForm.ejs') %> <%-
+    include('./partials/displayFolders.ejs', {folders: folders}) %>
   </body>
 </html>

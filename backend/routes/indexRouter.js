@@ -4,6 +4,7 @@ import signUpRouter from './signUpRouter.js';
 import { requireAuth } from '../middlewares/authMiddleware.js';
 import multer from 'multer';
 import ffRouter from './file-folderRouter.js';
+import { displayFolder } from '../controllers/mainController.js';
 const upload = multer({ dest: './uploads' });
 const indexRouter = Router();
 
@@ -25,18 +26,15 @@ indexRouter.get('/', (req, res) => {
     res.redirect('/login');
   }
 });
-indexRouter.get('/home', requireAuth, (req, res) => {
-  console.log(req.session);
-  res.render('index');
-});
+indexRouter.get('/home', requireAuth, displayFolder);
 indexRouter.post(
   '/home',
   requireAuth,
   upload.single('uploaded_file'),
-  function (req, res) {
+  function (req, res, next) {
     console.log(req.file, req.body);
-    res.redirect('/home');
-    // next();
+    // res.redirect('/home', { folders: folders });
+    next();
   }
 );
 
