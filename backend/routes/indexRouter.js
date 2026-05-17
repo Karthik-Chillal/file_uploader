@@ -3,6 +3,7 @@ import loginRouter from './loginRouter.js';
 import signUpRouter from './signUpRouter.js';
 import { requireAuth } from '../middlewares/authMiddleware.js';
 import multer from 'multer';
+import ffRouter from './file-folderRouter.js';
 const upload = multer({ dest: './uploads' });
 const indexRouter = Router();
 
@@ -28,10 +29,17 @@ indexRouter.get('/home', requireAuth, (req, res) => {
   console.log(req.session);
   res.render('index');
 });
-indexRouter.post('/home', upload.single('uploaded_file'), function (req, res) {
-  console.log(req.file, req.body);
-  res.redirect('/home');
-  // next();
-});
+indexRouter.post(
+  '/home',
+  requireAuth,
+  upload.single('uploaded_file'),
+  function (req, res) {
+    console.log(req.file, req.body);
+    res.redirect('/home');
+    // next();
+  }
+);
+
+indexRouter.use('/folders', requireAuth, ffRouter);
 
 export default indexRouter;
