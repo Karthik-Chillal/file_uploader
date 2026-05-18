@@ -45,9 +45,32 @@ export const createFolder = async (req, res) => {
 
 export const displayFolder = async (req, res) => {
   try {
-    const { rows: folders } = await pool.query('SELECT * FROM folders');
-    res.render('index.ejs', { folders: folders });
+    const folderId = req.params.id || null;
+    const currentUser = req.user.id;
+
+    let queryText = '';
+    let queryParams = [];
+
+    if (folderId === null) {
+      queryText =
+        'SELECT * FROM folders WHERE parent_folder_id IS NULL AND user_id = $1';
+      queryParams = [currentUser];
+    } else {
+      queryText =
+        'SELECT * FROM folders WHERE parent_folder_id = $1 AND user_id = $2';
+      queryParams = [folderId, currentUser];
+    }
+
+    const { rows: folders } = await pool.query(queryText, queryParams);
+    console.log(folders, folderId);
+
+    res.render('index.ejs', {
+      folders: folders,
+      currentFolderId: folderId,
+    });
   } catch (err) {
     console.log(err);
+    res.status(500).send('Server Error');
   }
 };
+export const getFolder = (req, res) => {};

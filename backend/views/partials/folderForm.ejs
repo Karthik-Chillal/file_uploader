@@ -1,6 +1,10 @@
 <form action="/folders" method="post">
   <label for="folder_name">File Name</label>
   <input type="text" name="folder_name" id="folder_name" required />
-  <input type="hidden" value="" name="parent_folder_id" />
+  <input
+    type="hidden"
+    value="<%= currentFolderId  %>"
+    name="parent_folder_id"
+  />
   <button type="submit">Create Folder</button>
 </form>
