@@ -37,7 +37,11 @@ export const createFolder = async (req, res) => {
       'INSERT INTO folders (folder_name, user_id, parent_folder_id) VALUES ($1, $2, $3)',
       [req.body.folder_name, req.user.id, parentFolderId]
     );
-    res.redirect('/home');
+    if (parentFolderId != null) {
+      res.redirect(`/folders/${parentFolderId}`);
+    } else {
+      res.redirect('/home');
+    }
   } catch (err) {
     console.log(err);
   }
