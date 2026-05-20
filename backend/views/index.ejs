@@ -10,8 +10,10 @@
     <h2>Welcome back, <%= currentUser.username %>!</h2>
     <a href="/logout">Logout</a>
     <br />
-    <%- include('./partials/fileForm.ejs') %> <%-
+    <a href="<%= backFolderId ? '/folders/' + backFolderId : '/home' %>">back</a>
+    <%- include('./partials/fileForm.ejs', {currentFolderId: currentFolderId}) %> <%-
     include('./partials/folderForm.ejs', {currentFolderId: currentFolderId}) %> <%-
     include('./partials/displayFolders.ejs', {folders: folders}) %>
+    <%- include('./partials/displayFiles.ejs', {files: files}) %>
   </body>
 </html>

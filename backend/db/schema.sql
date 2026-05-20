@@ -23,6 +23,7 @@ CREATE TABLE folders(
 CREATE TABLE files(
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   file_name TEXT NOT NULL,
+  original_name TEXT NOT NULL,
   folder_contained_id UUID,
   user_id UUID NOT NULL,
   file_size BIGINT NOT NULL,

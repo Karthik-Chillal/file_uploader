@@ -1,0 +1,11 @@
+<ul>
+    <div>Files</div>
+    <% files.forEach((file)=>{%>
+        <li>
+            <strong>
+                <%= file.original_name %>
+            </strong>
+            <a href="/files/<%= file.file_name %>">Open</a>
+        </li>
+    <%}) %>
+</ul>

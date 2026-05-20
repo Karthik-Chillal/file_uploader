@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   getSignUpPage,
   postSignUpPage,
-} from '../controllers/mainController.js';
+} from '../controllers/authController.js';
 import { redirectIfAuthenticated } from '../middlewares/authMiddleware.js';
 const signUpRouter = Router();
 signUpRouter.get('/', redirectIfAuthenticated, getSignUpPage);

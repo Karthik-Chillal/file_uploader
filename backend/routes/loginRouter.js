@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getLoginPage, postLoginPage } from '../controllers/mainController.js';
+import { getLoginPage, postLoginPage } from '../controllers/authController.js';
 import { redirectIfAuthenticated } from '../middlewares/authMiddleware.js';
 const loginRouter = Router();
 loginRouter.get('/', redirectIfAuthenticated, getLoginPage);
