@@ -9,6 +9,7 @@ CREATE TABLE folders(
   folder_name TEXT NOT NULL,
   user_id UUID NOT NULL,
   parent_folder_id UUID,
+  date_created TIMESTAMP DEFAULT NOW(),
   CONSTRAINT fk_user
     FOREIGN KEY(user_id)
     REFERENCES users(id)
@@ -28,6 +29,7 @@ CREATE TABLE files(
   user_id UUID NOT NULL,
   file_size BIGINT NOT NULL,
   mime_type TEXT NOT NULL,
+  date_created TIMESTAMP DEFAULT NOW(),
   CONSTRAINT fk_file_in_folder
     FOREIGN KEY(folder_contained_id)
     REFERENCES  folders(id)

@@ -6,6 +6,30 @@
                 <%= file.original_name %>
             </strong>
             <a href="/files/<%= file.file_name %>">Open</a>
+            <button onclick="fileDeleteHandler('<%= file.file_name %>')">Delete</button>
+            <button onclick="fileRenameHandler('<%= file.file_name %>')">Rename</button>
         </li>
     <%}) %>
 </ul>
+<script>
+    const fileDeleteHandler = async (fileName)=>{
+        const res = await fetch(`/files/delete/${fileName}`, {method:'DELETE'});
+        // console.log(res);
+        if(res.ok){
+            window.location.reload();
+        }
+        else{
+            alert('deletion failed.');
+        }
+    }
+    const fileRenameHandler = async (fileName) => {
+        const newName = prompt('Enter new name');
+        const res = await fetch(`/files/rename/${fileName}`, {method: 'PATCH', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({fileName:newName})});
+        if(res.ok){
+            window.location.reload();
+        }
+        else{
+            alert('rename operation failed.')
+        }
+    }
+</script>

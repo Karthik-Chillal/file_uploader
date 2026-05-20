@@ -27,11 +27,11 @@ export const displayFolder = async (req, res) => {
 
     if (folderId === null) {
       folderQueryText =
-        'SELECT * FROM folders WHERE parent_folder_id IS NULL AND user_id = $1';
+        'SELECT * FROM folders WHERE parent_folder_id IS NULL AND user_id = $1 ORDER BY date_created DESC';
       folderQueryParams = [currentUser];
     } else {
       folderQueryText =
-        'SELECT * FROM folders WHERE parent_folder_id = $1 AND user_id = $2';
+        'SELECT * FROM folders WHERE parent_folder_id = $1 AND user_id = $2 ORDER BY date_created DESC';
       folderQueryParams = [folderId, currentUser];
     }
 
@@ -45,11 +45,11 @@ export const displayFolder = async (req, res) => {
 
     if (folderId === null) {
       fileQueryText =
-        'SELECT * FROM files WHERE folder_contained_id IS NULL AND user_id = $1';
+        'SELECT * FROM files WHERE folder_contained_id IS NULL AND user_id = $1 ORDER BY date_created DESC';
       fileQueryParams = [currentUser];
     } else {
       fileQueryText =
-        'SELECT * FROM files WHERE folder_contained_id = $1 AND user_id = $2';
+        'SELECT * FROM files WHERE folder_contained_id = $1 AND user_id = $2 ORDER BY date_created DESC';
       fileQueryParams = [folderId, currentUser];
     }
 
@@ -94,5 +94,19 @@ export const deleteFolder = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
+  }
+};
+
+export const renameFolder = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const folderId = req.params.folderId;
+    const updatedFolder = await pool.query(
+      'UPDATE folders SET folder_name=$1 WHERE user_id=$2 AND id=$3',
+      [req.body.folder_name, userId, folderId]
+    );
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
   }
 };

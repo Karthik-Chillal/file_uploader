@@ -7,14 +7,14 @@
       <strong><%= folder.folder_name %></strong>
 
       <a href="/folders/<%= folder.id %>">Open</a>
-      <a href="/rename">Rename</a>
-      <button onclick="handleDelete('<%= folder.id %>')">Delete</button>
+      <button onclick="folderHandleRename('<%= folder.id %>')"> Rename </button>
+      <button onclick="folderHandleDelete('<%= folder.id %>')">Delete</button>
     </li>
   <% }); %>
 </ul>
 
 <script>
-  function handleDelete(id) {
+  function folderHandleDelete(id) {
     if (confirm('Are you sure you want to delete this folder?')) {
       fetch(`/folders/delete/${id}`, {
         method: 'POST',
@@ -25,6 +25,17 @@
           alert('Delete failed');
         }
       });
+    }
+  }
+  const folderHandleRename = async (id)=>{
+    const newName = prompt(`Enter new folder name:`)
+    const res = await fetch(`/folders/rename/${id}`, {method: 'PATCH', headers:{'Content-Type': 'application/json'}, body: JSON.stringify({folder_name:newName})});
+    // console.log(res);
+    if(res.ok){
+      window.location.reload();
+    }
+    else{
+      alert('Rename Failed.');
     }
   }
 </script>

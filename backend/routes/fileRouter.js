@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import path from 'node:path';
-import { fileUpload } from '../controllers/fileController.js';
+import {
+  fileUpload,
+  deleteFile,
+  renameFile,
+} from '../controllers/fileController.js';
 import multer from 'multer';
 
 const upload = multer({ dest: './uploads' });
@@ -13,4 +17,6 @@ fileRouter.get('/:fileId', (req, res) => {
   res.sendFile(filePath);
 });
 
+fileRouter.delete('/delete/:fileName', deleteFile);
+fileRouter.patch('/rename/:fileName', renameFile);
 export default fileRouter;
